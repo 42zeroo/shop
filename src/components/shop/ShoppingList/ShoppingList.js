@@ -122,9 +122,9 @@ const products = [
 const ShoppingList = ({Category}) => {
     return (
         <>
-        <div>
-            Filtruj
-        </div>
+        <button>
+            Filtruj 
+        </button>
         <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
