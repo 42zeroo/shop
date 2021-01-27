@@ -1,0 +1,21 @@
+.cartContainer {
+  display: flex;
+
+  height: 30vh;
+
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteIcon {
+  transform: scale(3) translateY(8.4px);
+  height: 10px;
+  width: 10px;
+  path {
+    fill: green;
+    &:hover {
+      fill: lightgreen;
+    }
+  }
+}

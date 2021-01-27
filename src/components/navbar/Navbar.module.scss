@@ -1,0 +1,50 @@
+.sidebar {
+  display: flex;
+  height: 5rem;
+  width: 100%;
+
+  position: relative;
+  background-color: rgb(48, 56, 48);
+  z-index: 1;
+}
+.logo {
+  margin-left: 2rem;
+  color: rgb(187, 251, 178);
+}
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin: auto;
+}
+.cart {
+  margin-left: -50px;
+  margin-right: 100px;
+  transform: scale(3) translateY(25px);
+  path {
+    fill: rgb(187, 251, 178);
+    &:hover {
+      fill: lightgreen;
+    }
+  }
+}
+
+.cartItemsLenght {
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 20px;
+  color: white;
+  position: absolute;
+  transform: translateY(-30%);
+  p {
+    transform: translateY(-70%);
+
+    font-size: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
