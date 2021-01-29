@@ -1,7 +1,8 @@
 import React from 'react'
 import Cart from '../features/shoppingCart/ShoppingCart'
 
-import ShoppingList from '../components/shop/ShoppingList/ShoppingList'
+import ShoppingList from './shop/ShoppingList'
+import ProductInfo from '../components/shop/ProductInfo'
 
 import {
     Switch,
@@ -10,6 +11,7 @@ import {
 
 
 const Content = () => {
+   
     const contentStyle = {
 
         height: "100%",
@@ -22,22 +24,21 @@ const Content = () => {
         <div style={contentStyle}>
             
                 <Switch>
-                    <Route path="/" exact > </Route>
-                    <Route path="/shop/category/Sporty wodne">
-                        <ShoppingList Category="Sporty wodne" />
+                    <Route path="/" exact >
+                         HOME 
                     </Route>
-                    <Route path="/shop/category/Wspinaczka">
-                        <ShoppingList Category="Wspinaczka" />
-                    </Route>
-                    <Route path="/shop/category/Pilka nozna">
-                        <ShoppingList Category="Pilka nozna" />
-                    </Route>
-                    <Route path="/shop/category/Wyscigi">
-                        <ShoppingList Category="Wyscigi" />
-                    </Route>
+
                     <Route path="/cart"  >
                         <Cart />
                     </Route>
+                    <Route exact path="/shop/category=:category/product=:title"  >
+                        <ProductInfo />
+                    </Route>
+                    <Route path="/shop/category=:category">
+                        <ShoppingList />
+                    </Route>
+
+
                  </Switch>
             
         </div>

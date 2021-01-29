@@ -1,5 +1,9 @@
-import React from 'react'
-import ShoppingItem from '../ShoppingItem/ShoppingItem'
+import React, {useRef, useState, useEffect} from 'react'
+import ShoppingItem from './ShoppingItem'
+
+import {useSelector} from 'react-redux'
+import {selectCategory} from '../../features/category/categorySlice'
+import { Container, Row, Form, Col, Button, Card } from 'react-bootstrap';
 
 const products = [
     {
@@ -117,27 +121,86 @@ const products = [
     },
     
     
+]   
+
+const sortTypes = [
+    {
+        name: "Po cenie rosnaco",
+        function: (a, b) => a.price > b.price ? 1 : -1,
+    },
+    {
+        name: "Po cenie malejaco",
+        function: (a, b) => a.price < b.price ? 1 : -1,
+    },
+    {
+        name: "Po nazwie rosnaco",
+        function: (a, b) => a.title < b.title ? 1 : -1,
+    },
+    {
+        name: "Po nazwie malejaco",
+        function: (a, b) => a.title < b.title ? 1 : -1,
+    },
 ]
 
-const ShoppingList = ({Category}) => {
+const ShoppingList = () => {
+
+    const category = useSelector(selectCategory);
+
+    const [productsList, setProductList] = useState(
+        products.filter(product => product.category === category)
+    )
+
+    const [sortMethod, setSortMethod] = useState(sortTypes[0])
+    const selectSortingEl = useRef(null);
+    const sortMethodChangeHandler = () => {
+        let type = sortTypes.find(x => x.name === selectSortingEl.current.value)
+        setSortMethod(type)
+    }
+    useEffect(() =>{
+        const newProductList = productsList.sort(sortMethod.function);
+        setProductList(newProductList)
+        return newProductList;
+    }
+    ,[sortMethod])
+    useEffect(() =>{
+        const newProductList = products.filter(product => product.category === category);
+        setProductList(newProductList)
+        return newProductList;
+    }
+    ,[category])
+
+
     return (
         <>
-        <button>
-            Filtruj 
-        </button>
-        <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
-            gridGap: "0.9rem",
-            alignItems: "center",
-            justifyItems: "center",
-            marginLeft: "20px",
-        }}>
-            
-            {products.filter(product => product.category === Category).map(product => 
-                <ShoppingItem 
-                  Item={product} />)}
-        </div>
+        <Row>
+            <Col></Col>
+            <Col lg={2} className="mr-5">
+                <Form>
+                    <Form.Group controlId="exampleForm.SelectCustom">
+                        <Form.Label>Sortuj wedlug:</Form.Label>
+                        <Form.Control ref={selectSortingEl} onChange={sortMethodChangeHandler} as="select" custom>
+                            {
+                                sortTypes.map(type => <>
+                                    <option>{type.name}</option>
+                                </>)
+                            }
+                        </Form.Control>
+                    </Form.Group>
+                </Form>
+            </Col>
+            <Col  md={2} ></Col>
+        </Row>
+        <Container>
+            <Row className="d-flex justify-content-center "> 
+                {productsList.map(product =>
+                        <div style={{minWidth: "3rem"}}>
+                            <ShoppingItem 
+                            className="p2"
+                            Item={product} />
+                        </div>)}
+            </Row>
+        </Container>
+
         </>
     )
 }

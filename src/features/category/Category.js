@@ -1,35 +1,43 @@
 import React from 'react'
-import styles from './Category.module.css';
 import {changeCategory, selectCategory} from './categorySlice'
 import {useDispatch} from 'react-redux'
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
+
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+
 
 const categories = ["Sporty wodne", "Wspinaczka", "Pilka nozna", "Wyscigi"]
 const Category = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     return (
         <>
-        <div style={{display: "flex"}}>
+        <Container fluid={true}>
+        <Row >
             {
                 categories.map(catName => {
-                    const linkTo = "/shop/category/"+catName;
+                    const linkTo = "/shop/category="+catName;
                     return (
-                        <div className={styles.row}>
+                        <Col lg={3}>
+                            <Button variant="light" size="md" onClick={()=> history.push(linkTo, {from: "Kategoria: "+catName})}>
+
+                            
                             <Link
                             to={linkTo}
-                            className={styles.button}
                             onClick={()=> dispatch(changeCategory(catName))}
                             >
                                 {catName}
                             </Link>
-                        </div>
+                            </Button>
+                            </Col>
                         )
                 }
                     
                 )
             }
+                </Row>
 
-        </div>
+        </Container>
         
         </>
         
